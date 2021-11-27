@@ -7,6 +7,8 @@ package Conexiones;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import javax.swing.JOptionPane;
 
 /**
@@ -120,6 +122,41 @@ public class Conexion extends javax.swing.JFrame {
 
     private void BtnConsultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnConsultarActionPerformed
         // TODO add your handling code here:
+        
+        try{
+            
+            Connection Conexion = null;
+            Conexion = getConection();
+            
+            PreparedStatement ps;
+            ResultSet Res;
+            
+            
+            
+            ps = Conexion.prepareStatement("SELECT * FROM ALUMNO");
+            Res = ps.executeQuery();
+            
+            if(Res.next()){
+                
+                JOptionPane.showMessageDialog(null, "+Nombre: " + Res.getString("NombreAlumno")+ "  +Apellido: " + Res.getString("ApellidoAlumno") + " +Matricula: " + Res.getString("MatriculaEstudiante"));
+                
+            }else{
+                JOptionPane.showMessageDialog(null, "NO HAY DATOS");
+            }
+         
+            Conexion.close();
+            
+            
+           
+        }catch(Exception e){
+          
+            JOptionPane.showMessageDialog(null, e);
+            
+            
+        }
+        
+        
+        
     }//GEN-LAST:event_BtnConsultarActionPerformed
 
     /**
